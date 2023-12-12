@@ -61,7 +61,7 @@ pipeline{
             }
         }
 
-        stage(){
+        stage('Push Docker Image'){
             steps{
                 script{
                     docker.withRegistry('','dockerhub'){
@@ -70,6 +70,17 @@ pipeline{
                     }
                 }
             }
+        }
+    }
+    post{
+        always{
+            echo 'Always run'
+        }
+        success{
+            echo 'SUCCESS'
+        }
+        failure{
+            echo 'FAILURE'
         }
     }
 }
