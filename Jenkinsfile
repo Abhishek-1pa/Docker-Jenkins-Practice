@@ -55,7 +55,7 @@ pipeline{
             steps{
                 //docker build -t demo:$env.BUILD_TAG
                 script{
-                    dockerImage = docker.build("demo:${$env.BUILD_TAG}")
+                    dockerImage = docker.build("demo:${env.BUILD_TAG}")
                 }
                 
             }
