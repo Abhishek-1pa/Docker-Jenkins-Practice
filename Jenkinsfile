@@ -32,16 +32,25 @@ pipeline{
 
             }
         }
+
         stage('Comiple'){
             steps{
                 sh "mvn clean compile"
             }
         }
+
         stage('Test'){
             steps{
                 sh "mvn test"
             }
         }
+
+        stage('Package'){
+            steps{
+                sh "mvn clean package"
+            }
+        }
+
         stage('Build Docker Image'){
             steps{
                 //docker build -t demo:$env.BUILD_TAG
@@ -51,11 +60,14 @@ pipeline{
                 
             }
         }
+
         stage(){
             steps{
                 script{
-                    dockerImage.push();
-                    dockerImage.push('latest')
+                    docker.withRegistry('','dockerhub'){
+                        dockerImage.push();
+                        dockerImage.push('latest');
+                    }
                 }
             }
         }
